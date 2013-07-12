@@ -1,0 +1,13 @@
+name: SimpleSlotBypass
+version: maven-version-number
+description: Plugin that allows servers to have hidden reserve slots
+authors: [Lanky_Lord]
+website: https://github.com/LankyLord/SimpleSlotBypass
+
+main: net.lankylord.simpleslotbypass.SimpleSlotBypass
+database: false
+
+permissions:
+  simpleslotbypass.bypass:
+    description: Allows you to access the reserved slots
+    default: op
