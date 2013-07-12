@@ -37,15 +37,15 @@ import org.bukkit.event.player.PlayerLoginEvent;
  * @author LankyLord
  */
 public class LoginListener implements Listener {
-
+    
     private final SimpleSlotBypass plugin;
     private String serverFullMessage;
-
+    
     public LoginListener(SimpleSlotBypass plugin) {
         this.plugin = plugin;
-        this.serverFullMessage = "The server is currently full";
+        this.serverFullMessage = plugin.getConfig().getString("server-full-message");
     }
-
+    
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerLogin(PlayerLoginEvent e) {
         Player p = e.getPlayer();

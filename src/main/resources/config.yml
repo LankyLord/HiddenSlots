@@ -2,3 +2,4 @@
 #The maximum amount of slots should be the same as in your server.properties.
 public-slot-count: 20
 reserved-slot-count: 10
+server-full-message: "The server is currently full"
