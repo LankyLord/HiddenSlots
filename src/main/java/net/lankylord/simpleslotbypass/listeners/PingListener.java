@@ -36,13 +36,13 @@ import org.bukkit.event.server.ServerListPingEvent;
  * @author LankyLord
  */
 public class PingListener implements Listener {
-    
+
     private final SimpleSlotBypass plugin;
-    
+
     public PingListener(SimpleSlotBypass plugin) {
         this.plugin = plugin;
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPing(ServerListPingEvent e) {
         e.setMaxPlayers(plugin.publicSlots);
