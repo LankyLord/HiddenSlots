@@ -37,15 +37,15 @@ import org.bukkit.event.player.PlayerLoginEvent;
  * @author LankyLord
  */
 public class LoginListener implements Listener {
-    
+
     private final SimpleSlotBypass plugin;
     private String serverFullMessage;
-    
+
     public LoginListener(SimpleSlotBypass plugin) {
         this.plugin = plugin;
         this.serverFullMessage = plugin.getConfig().getString("server-full-message");
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerLogin(PlayerLoginEvent e) {
         Player p = e.getPlayer();
@@ -55,6 +55,7 @@ public class LoginListener implements Listener {
                 e.allow();
             if (players.length == plugin.maximumSlots)
                 e.disallow(PlayerLoginEvent.Result.KICK_FULL, serverFullMessage);
-        }
+        } else if (players.length == plugin.publicSlots && !p.hasPermission("simpleslotbypass.bypass"))
+            e.disallow(PlayerLoginEvent.Result.KICK_FULL, serverFullMessage);
     }
 }
