@@ -1,5 +1,6 @@
 #Define the amount of slots you wish the server to start with here.
-#The maximum amount of slots should be the same as in your server.properties.
+#You should make sure that the slots in your server.properties corresponds to the amount of slots you would like in the
+#Tab list.
 public-slot-count: 20
 reserved-slot-count: 10
 server-full-message: "The server is currently full"
