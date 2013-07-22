@@ -31,10 +31,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
-/**
- *
- * @author LankyLord
- */
+/** @author LankyLord */
 public class PingListener implements Listener {
 
     private final HiddenSlots plugin;

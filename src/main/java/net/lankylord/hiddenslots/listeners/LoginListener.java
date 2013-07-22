@@ -32,10 +32,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-/**
- *
- * @author LankyLord
- */
+/** @author LankyLord */
 public class LoginListener implements Listener {
 
     private final HiddenSlots plugin;

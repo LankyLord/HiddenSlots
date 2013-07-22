@@ -25,21 +25,19 @@
  */
 package net.lankylord.hiddenslots;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.lankylord.hiddenslots.listeners.LoginListener;
 import net.lankylord.hiddenslots.listeners.PingListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.MetricsLite;
 
-/**
- *
- * @author LankyLord
- */
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/** @author LankyLord */
 public class HiddenSlots extends JavaPlugin {
 
-    static final Logger logger = Logger.getLogger("Minecraft");
+    private static final Logger logger = Logger.getLogger("Minecraft");
     public int publicSlots;
     public int maximumSlots;
 
