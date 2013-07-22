@@ -23,9 +23,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.lankylord.simpleslotbypass.listeners;
+package net.lankylord.hiddenslots.listeners;
 
-import net.lankylord.simpleslotbypass.SimpleSlotBypass;
+import net.lankylord.hiddenslots.HiddenSlots;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,10 +38,10 @@ import org.bukkit.event.player.PlayerLoginEvent;
  */
 public class LoginListener implements Listener {
 
-    private final SimpleSlotBypass plugin;
+    private final HiddenSlots plugin;
     private String serverFullMessage;
 
-    public LoginListener(SimpleSlotBypass plugin) {
+    public LoginListener(HiddenSlots plugin) {
         this.plugin = plugin;
         this.serverFullMessage = plugin.getConfig().getString("server-full-message");
     }
@@ -50,12 +50,12 @@ public class LoginListener implements Listener {
     public void onPlayerLogin(PlayerLoginEvent e) {
         Player p = e.getPlayer();
         Player[] players = plugin.getServer().getOnlinePlayers();
-        if (e.getResult() == PlayerLoginEvent.Result.KICK_FULL && p.hasPermission("simpleslotbypass.bypass")) {
+        if (e.getResult() == PlayerLoginEvent.Result.KICK_FULL && p.hasPermission("hiddenslots.bypass")) {
             if (players.length <= plugin.maximumSlots)
                 e.allow();
             if (players.length == plugin.maximumSlots)
                 e.disallow(PlayerLoginEvent.Result.KICK_FULL, serverFullMessage);
-        } else if (players.length == plugin.publicSlots && !p.hasPermission("simpleslotbypass.bypass"))
+        } else if (players.length == plugin.publicSlots && !p.hasPermission("hiddenslots.bypass"))
             e.disallow(PlayerLoginEvent.Result.KICK_FULL, serverFullMessage);
     }
 }

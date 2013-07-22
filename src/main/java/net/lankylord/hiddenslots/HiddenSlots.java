@@ -23,28 +23,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.lankylord.simpleslotbypass.listeners;
+package net.lankylord.hiddenslots;
 
-import net.lankylord.simpleslotbypass.SimpleSlotBypass;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.ServerListPingEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.lankylord.hiddenslots.listeners.LoginListener;
+import net.lankylord.hiddenslots.listeners.PingListener;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.MetricsLite;
 
 /**
  *
  * @author LankyLord
  */
-public class PingListener implements Listener {
+public class HiddenSlots extends JavaPlugin {
 
-    private final SimpleSlotBypass plugin;
+    static final Logger logger = Logger.getLogger("Minecraft");
+    public int publicSlots;
+    public int maximumSlots;
 
-    public PingListener(SimpleSlotBypass plugin) {
-        this.plugin = plugin;
+    @Override
+    public void onEnable() {
+        saveDefaultConfig();
+        saveConfig();
+        loadMetrics();
+        publicSlots = getConfig().getInt("public-slot-count");
+        maximumSlots = (getConfig().getInt("public-slot-count") + getConfig().getInt("reserved-slot-count"));
+        registerListeners();
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onPing(ServerListPingEvent e) {
-        e.setMaxPlayers(plugin.publicSlots);
+    private void loadMetrics() {
+        try {
+            MetricsLite metrics = new MetricsLite(this);
+            metrics.start();
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Failed to submit stats");
+        }
+    }
+
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new LoginListener(this), this);
+        getServer().getPluginManager().registerEvents(new PingListener(this), this);
     }
 }

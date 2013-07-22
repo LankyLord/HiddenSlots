@@ -23,47 +23,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.lankylord.simpleslotbypass;
+package net.lankylord.hiddenslots.listeners;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.lankylord.simpleslotbypass.listeners.LoginListener;
-import net.lankylord.simpleslotbypass.listeners.PingListener;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.MetricsLite;
+import net.lankylord.hiddenslots.HiddenSlots;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.ServerListPingEvent;
 
 /**
  *
  * @author LankyLord
  */
-public class SimpleSlotBypass extends JavaPlugin {
+public class PingListener implements Listener {
 
-    static final Logger logger = Logger.getLogger("Minecraft");
-    public int publicSlots;
-    public int maximumSlots;
+    private final HiddenSlots plugin;
 
-    @Override
-    public void onEnable() {
-        saveDefaultConfig();
-        saveConfig();
-        loadMetrics();
-        publicSlots = getConfig().getInt("public-slot-count");
-        maximumSlots = (getConfig().getInt("public-slot-count") + getConfig().getInt("reserved-slot-count"));
-        registerListeners();
+    public PingListener(HiddenSlots plugin) {
+        this.plugin = plugin;
     }
 
-    private void loadMetrics() {
-        try {
-            MetricsLite metrics = new MetricsLite(this);
-            metrics.start();
-        } catch (IOException e) {
-            logger.log(Level.WARNING, "Failed to submit stats");
-        }
-    }
-
-    private void registerListeners() {
-        getServer().getPluginManager().registerEvents(new LoginListener(this), this);
-        getServer().getPluginManager().registerEvents(new PingListener(this), this);
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPing(ServerListPingEvent e) {
+        e.setMaxPlayers(plugin.publicSlots);
     }
 }
